@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="EConstruction.Views.NavigationPanelUC" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EConstruction.Views" xmlns:fa="http://schemas.fontawesome.io/icons/" mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="250">
+
+    <UserControl.Resources>
+        <Style x:Key="NavigationItemStyle" TargetType="Border">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActiveNavigationItemStyle" TargetType="Border" BasedOn="{StaticResource NavigationItemStyle}">
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="BorderBrush" Value="#007ACC"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
+            <Setter Property="fa:ImageAwesome.Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="NavigationTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="NavigationIconStyle" TargetType="fa:ImageAwesome">
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#333333">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#555555" BorderThickness="0,0,0,1" Padding="15">
+            <TextBlock Text="EConstruction CPMS" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="0,10,0,0" x:Name="NavigationItemsStackPanel">
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Dashboard"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Dashboard" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Інформаційна панель" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Leads"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="UserPlus" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Ліди" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Estimates"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="FileText" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Оцінки" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Tasks"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Tasks" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Завдання" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="RFQs"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="ShoppingCart" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Запити пропозицій" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Clients"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Users" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Клієнти / Контакти" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Communications"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Comments" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Комунікації" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Catalogs"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Book" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Каталоги" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Integrations"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Cogs" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Інтеграції" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource NavigationItemStyle}"
+                    Tag="Preview"
+                    MouseLeftButtonUp="NavigationItem_MouseLeftButtonUp">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Flask" Style="{StaticResource NavigationIconStyle}"/>
+                    <TextBlock Text="Перегляд функцій" Style="{StaticResource NavigationTextStyle}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

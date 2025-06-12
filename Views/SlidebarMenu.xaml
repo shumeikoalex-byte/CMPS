@@ -1,0 +1,225 @@
+﻿<UserControl x:Class="EConstruction.Views.SlidebarMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodels="clr-namespace:EConstruction.ViewModels"
+             xmlns:local="clr-namespace:EConstruction.Converters"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SlidebarMenuViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="220">  <!-- Додаємо простір імен для конвертерів -->
+
+    <UserControl.Resources>
+        <!-- Кольори -->
+        <Color x:Key="MenuBackgroundColor">#1D1F23</Color>
+        <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource MenuBackgroundColor}"/>
+        <Color x:Key="ActiveMenuColor">#007ACC</Color>
+        <SolidColorBrush x:Key="ActiveMenuBrush" Color="{StaticResource ActiveMenuColor}"/>
+
+        <!-- Іконка для розгортання/згортання підменю (стрілка) -->
+        <Geometry x:Key="ExpandCollapseIconGeometry">M7 10l5 5 5-5z</Geometry>
+        <!-- Вниз трикутник -->
+        <!-- Іконка для ToggleButton (гамбургер) -->
+        <Geometry x:Key="ToggleMenuIconGeometry">M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z</Geometry>
+
+        <!-- Конвертери -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter">
+        <BooleanToVisibilityConverter.TrueValue>Collapsed</BooleanToVisibilityConverter.TrueValue>
+        <BooleanToVisibilityConverter.FalseValue>Visible</BooleanToVisibilityConverter.FalseValue>
+        </BooleanToVisibilityConverter>
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <local:BooleanToAngleConverter x:Key="BooleanToAngleConverter"/>
+        <local:BooleanToAngleConverter x:Key="ToggleAngleConverter" TrueAngle="180" FalseAngle="0"/>
+
+        <!-- Базовий стиль Border для пункту меню -->
+        <Style x:Key="BaseMenuItemBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="TextBlock.Foreground" Value="#CCCCCC"/>
+            <!-- Default text color -->
+            <Setter Property="Shape.Fill" Value="#AAAAAA"/>
+            <!-- Default icon color (for Path) -->
+            <EventSetter Event="MouseLeftButtonUp" Handler="MenuItem_MouseLeftButtonUp"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2D2F33"/>
+                    <!-- Hover background -->
+                    <Setter Property="TextBlock.Foreground" Value="White"/>
+                    <Setter Property="Shape.Fill" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для тексту пункту меню -->
+        <Style x:Key="MenuItemTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+
+        <!-- Стилі для ToggleButton (гамбургер меню) -->
+        <Style x:Key="ToggleMenuStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#383a3f"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#383a3f"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- DataTemplate для головного пункту меню -->
+        <DataTemplate DataType="{x:Type viewmodels:MenuItemViewModel}">
+            <StackPanel>
+                <!-- DataTemplate повинен мати лише один кореневий елемент -->
+                <Border x:Name="MenuItemBorder"
+                        Style="{StaticResource BaseMenuItemBorderStyle}"
+                        Cursor="Hand"
+                        Margin="0,2">
+                    <!-- Behaviours for command on click -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- Для іконки розгортання/згортання підменю -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Іконка -->
+                        <Viewbox Grid.Column="0" Width="20" Height="20" Margin="0,0,10,0" VerticalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <!-- Використання Path для векторних іконок, якщо IconPathData є -->
+                                <Path Data="{Binding IconPathData}"
+                                      Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}}, Path=(TextElement.Foreground)}"
+                                      Visibility="{Binding IconPathData, Converter={StaticResource StringToVisibilityConverter}}"/>
+                                <!-- Використання TextBlock для Emoji, якщо IconPathData порожній і EmojiIcon є -->
+                                <TextBlock Text="{Binding EmojiIcon}" FontSize="20" FontWeight="Bold"
+                                           Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}}, Path=(TextElement.Foreground)}"
+                                           Visibility="{Binding EmojiIcon, Converter={StaticResource InverseStringToVisibilityConverter}}"/>
+                                <!-- Змінено на InverseStringToVisibilityConverter -->
+                            </Canvas>
+                        </Viewbox>
+
+                        <!-- Текст заголовка -->
+                        <TextBlock Grid.Column="1" Text="{Binding Header}"
+                                   Style="{StaticResource MenuItemTextStyle}"
+                                   Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.IsCollapsed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+
+                        <!-- Іконка для розгортання підменю (показуємо тільки коли меню розгорнуте) -->
+                        <Path Grid.Column="2"
+                              Data="{StaticResource ExpandCollapseIconGeometry}"
+                              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}}, Path=(TextElement.Foreground)}"
+                              Width="10" Height="10" Margin="5,0,0,0"
+                              Visibility="{Binding HasSubMenuItemsAndNotCollapsed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Path.LayoutTransform>
+                                <RotateTransform Angle="{Binding IsExpanded, Converter={StaticResource BooleanToAngleConverter}}"/>
+                            </Path.LayoutTransform>
+                        </Path>
+                    </Grid>
+                </Border>
+
+                <!-- Підменю (прив'язане до SubMenuItems) -->
+                <ItemsControl ItemsSource="{Binding SubMenuItems}" Margin="0,0,0,0"
+                              Visibility="{Binding IsExpanded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type viewmodels:MenuItemViewModel}">
+                            <Border x:Name="SubMenuItemBorder"
+                                    Style="{StaticResource BaseMenuItemBorderStyle}"
+                                    Cursor="Hand"
+                                    Margin="20,2,0,2">
+                                <!-- Зміщений відступ для підменю -->
+                                <!-- Behaviours for command on click -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Іконка підменю -->
+                                    <Viewbox Grid.Column="0" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center">
+                                        <Canvas Width="24" Height="24">
+                                            <Path Data="{Binding IconPathData}"
+                                                  Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}}, Path=(TextElement.Foreground)}"
+                                                  Visibility="{Binding IconPathData, Converter={StaticResource StringToVisibilityConverter}}"/>
+                                            <TextBlock Text="{Binding EmojiIcon}" FontSize="16" FontWeight="Bold"
+                                                       Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}}, Path=(TextElement.Foreground)}"
+                                                       Visibility="{Binding EmojiIcon, Converter={StaticResource InverseStringToVisibilityConverter}}"/>
+                                        </Canvas>
+                                    </Viewbox>
+
+                                    <!-- Текст заголовка підменю -->
+                                    <TextBlock Grid.Column="1" Text="{Binding Header}"
+                                               Style="{StaticResource MenuItemTextStyle}"
+                                               Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.IsCollapsed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                </Grid>
+                            </Border>
+                            <!-- Тригери для стану активності підменю -->
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                    <Setter TargetName="SubMenuItemBorder" Property="Background" Value="{StaticResource ActiveMenuColor}"/>
+                                    <Setter TargetName="SubMenuItemBorder" Property="TextBlock.Foreground" Value="White"/>
+                                    <Setter TargetName="SubMenuItemBorder" Property="Shape.Fill" Value="White"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Тригери для стану активності головного пункту меню -->
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter TargetName="MenuItemBorder" Property="Background" Value="{StaticResource ActiveMenuColor}"/>
+                    <Setter TargetName="MenuItemBorder" Property="TextBlock.Foreground" Value="White"/>
+                    <Setter TargetName="MenuItemBorder" Property="Shape.Fill" Value="White"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource MenuBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Для кнопки перемикання меню -->
+            <RowDefinition Height="*"/>
+            <!-- Для пунктів меню -->
+        </Grid.RowDefinitions>
+
+        <!-- Кнопка перемикання (згортання/розгортання) -->
+        <ToggleButton Grid.Row="0"
+                      Command="{Binding ToggleMenuCommand}"
+                      Style="{StaticResource ToggleMenuStyle}"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,10">
+            <ToggleButton.Content>
+                <Path Data="{StaticResource ToggleMenuIconGeometry}" Fill="White" Width="20" Height="20">
+                    <Path.LayoutTransform>
+                        <RotateTransform Angle="{Binding IsChecked, RelativeSource={RelativeSource Self}, Converter={StaticResource ToggleAngleConverter}}"/>
+                    </Path.LayoutTransform>
+                </Path>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <!-- Список пунктів меню -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding MenuItems}" Margin="0,10,0,0">
+            <!-- ItemTemplate вже визначений в UserControl.Resources -->
+        </ItemsControl>
+    </Grid>
+</UserControl>
