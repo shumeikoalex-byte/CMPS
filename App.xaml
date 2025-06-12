@@ -1,0 +1,9 @@
+﻿<Application x:Class="EConstruction.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EConstruction"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Сюди можна додати глобальні стилі, такі як базовий стиль для TextBlock або Button, якщо це необхідно. -->
+    </Application.Resources>
+</Application>
