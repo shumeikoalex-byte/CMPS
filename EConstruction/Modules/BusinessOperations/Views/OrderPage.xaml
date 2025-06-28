@@ -1,0 +1,104 @@
+<Page
+    x:Class="EConstruction.Modules.BusinessOperations.Views.OrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:EConstruction.Modules.BusinessOperations.ViewModels"
+    xmlns:models="using:EConstruction.Modules.BusinessOperations.Models"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:converters="using:EConstruction.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:DecimalToCurrencyConverter x:Key="CurrencyConverter" />
+    </Page.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Загальна інформація про замовлення" Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="0" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Spacing="10" Margin="0,0,0,10">
+            <TextBox Header="Номер накладної" Text="{Binding CurrentOrder.InvoiceNumber, Mode=TwoWay}" Width="150" />
+            <TextBox Header="Номер відвантаження" Text="{Binding CurrentOrder.ShipmentNumber, Mode=TwoWay}" Width="150" />
+            <DatePicker Header="Дата документа" SelectedDate="{Binding CurrentOrder.DocumentDate, Mode=TwoWay}" Width="150" />
+            <ComboBox Header="Статус" SelectedItem="{Binding CurrentOrder.Status, Mode=TwoWay}" Width="150">
+                <models:OrderStatus>Open</models:OrderStatus>
+                <models:OrderStatus>Approved</models:OrderStatus>
+                <models:OrderStatus>Closed</models:OrderStatus>
+                <models:OrderStatus>Canceled</models:OrderStatus>
+            </ComboBox>
+        </StackPanel>
+
+        <TextBlock Text="Постачальник" Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="2" Margin="0,0,0,10"/>
+        <ComboBox Header="Виберіть постачальника"
+                  ItemsSource="{Binding Vendors}"
+                  DisplayMemberPath="VendorName"
+                  SelectedItem="{Binding CurrentOrder.Vendor, Mode=TwoWay}"
+                  Width="300" Grid.Row="3" Margin="0,0,0,10" />
+
+        <TextBlock Text="Позиції замовлення" Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="4" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Spacing="10" Margin="0,0,0,10">
+            <Button Content="Додати позицію" Command="{Binding AddNewItemCommand}" />
+            <Button Content="Видалити позицію" Command="{Binding RemoveOrderItemCommand}" />
+        </StackPanel>
+
+        <controls:DataGrid ItemsSource="{Binding OrderItems}" AutoGenerateColumns="False"
+                             Margin="0,0,0,10"
+                             Grid.Row="6">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="№ товару" Binding="{Binding ItemNumber}" Width="SizeToHeader"/>
+                <controls:DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="*"/>
+                <controls:DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="Auto"/>
+                <controls:DataGridTextColumn Header="Ціна (без податку)" Binding="{Binding DirectUnitCostExclTax}" Width="Auto"/>
+                <controls:DataGridTextColumn Header="Одиниця виміру" Binding="{Binding UnitOfMeasureCode}" Width="Auto"/>
+                <controls:DataGridTextColumn Header="Код податкової групи" Binding="{Binding TaxGroupCode}" Width="Auto"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+
+        <TextBlock Text="Підсумки" Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="7" Margin="0,0,0,10" VerticalAlignment="Bottom"/>
+        <StackPanel Grid.Row="8" Orientation="Vertical" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Проміжна сума (без ПДВ):" />
+                <TextBlock Text="{Binding CurrentOrder.SubtotalExclTax, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Знижка на інвойс (%):" />
+                <TextBox Text="{Binding CurrentOrder.InvoiceDiscountPercentage, Mode=TwoWay}" Width="80" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Знижка на інвойс (сума):" />
+                <TextBox Text="{Binding CurrentOrder.InvoiceDiscountAmount, Mode=TwoWay}" Width="80" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Податкова зона:" />
+                <TextBox Text="{Binding CurrentOrder.TaxAreaCode, Mode=TwoWay}" Width="80" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Сума (без ПДВ):" />
+                <TextBlock Text="{Binding CurrentOrder.TotalExclTax, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Загальний податок:" />
+                <TextBlock Text="{Binding CurrentOrder.TotalTax, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Загальна сума (з ПДВ):" />
+                <TextBlock Text="{Binding CurrentOrder.TotalInclTax, Mode=OneWay, Converter={StaticResource CurrencyConverter}}" />
+            </StackPanel>
+        </StackPanel>
+
+        <Button Content="Зберегти замовлення" Command="{Binding SaveOrderCommand}" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+    </Grid>
+</Page>

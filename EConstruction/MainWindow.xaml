@@ -1,0 +1,40 @@
+<Window
+    x:Class="EConstruction.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EConstruction"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="EConstruction">
+
+    <Grid>
+        <muxc:NavigationView x:Name="AppNavigationView"
+                             IsSettingsVisible="False"
+                             AlwaysShowHeader="False"
+                             PaneDisplayMode="LeftCompact"
+                             SelectionChanged="AppNavigationView_SelectionChanged">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Content="Господарські операції" Tag="OrderPage">
+                    <muxc:NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Document" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Постачальники" Tag="VendorPage">
+                    <muxc:NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Contact" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Звіти" Tag="ReportsPage">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8AF;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
+            <muxc:NavigationView.Content>
+                <Frame x:Name="ContentFrame" />
+            </muxc:NavigationView.Content>
+        </muxc:NavigationView>
+    </Grid>
+</Window>

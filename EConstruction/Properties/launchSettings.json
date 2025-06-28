@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EConstruction (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EConstruction (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
