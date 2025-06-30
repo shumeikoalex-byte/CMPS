@@ -1,0 +1,24 @@
+﻿CMPS.Reporting.Domain
+Відповідає за логіку, пов'язану з визначенням та генерацією звітів. Важливо: сам механізм генерації звітів (наприклад, робота з PDF) буде в Infrastructure шарі. Тут лише доменне представлення того, що є звітом.
+
+CMPS.Reporting.Domain/
+├── CMPS.Reporting.Domain.csproj
+├── Aggregates/
+│   └── ReportDefinition.cs // Корінь агрегату для визначення звіту (що і як відображати)
+├── Entities/
+│   ├── ReportParameter.cs  // Параметр звіту
+│   └── ReportSection.cs    // Секція звіту
+├── ValueObjects/
+│   ├── ReportName.cs
+│   ├── ReportCriteria.cs   // Об'єкт-значення для критеріїв фільтрації звіту
+│   └── ReportFormat.cs     // Наприклад, PDF, Excel, CSV
+├── Enums/
+│   └── ReportFrequency.cs  // Наприклад, Daily, Weekly, Monthly
+├── Exceptions/
+│   └── ReportDefinitionNotFoundException.cs
+├── Interfaces/
+│   └── IReportDefinitionRepository.cs
+│   └── IReportGenerationService.cs // Інтерфейс доменного сервісу для генерації звіту
+└── Events/
+    ├── ReportGeneratedEvent.cs
+    └── ReportDefinitionUpdatedEvent.cs

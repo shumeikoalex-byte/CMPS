@@ -1,0 +1,28 @@
+﻿CMPS.ProjectManagement.Domain
+Цей контекст також вже був наведений вище як приклад, але повторимо його для повноти.
+
+CMPS.ProjectManagement.Domain/
+├── CMPS.ProjectManagement.Domain.csproj
+├── Aggregates/
+│   └── Project.cs          // Корінь агрегату, який об'єднує інші пов'язані об'єкти
+├── Entities/
+│   ├── Task.cs             // Частина проекту
+│   ├── WorkPackage.cs      // Група завдань
+│   └── Deliverable.cs      // Результат проекту/завдання
+├── ValueObjects/
+│   ├── ProjectName.cs
+│   ├── ProjectDescription.cs
+│   ├── DateRange.cs        // Для дат початку/закінчення
+│   └── ProjectCode.cs      // Унікальний код проекту
+├── Enums/
+│   └── ProjectStatus.cs    // Наприклад, Planning, Active, Completed, Cancelled
+├── Exceptions/
+│   ├── ProjectNotFoundException.cs
+│   └── TaskNotAssignedException.cs
+├── Interfaces/
+│   ├── IProjectRepository.cs // Для доступу до агрегату Project
+│   └── ITaskRepository.cs  // (Опціонально) Якщо завдання можуть існувати незалежно
+└── Events/
+    ├── ProjectCreatedEvent.cs
+    ├── ProjectStatusChangedEvent.cs
+    └── TaskCompletedEvent.cs
