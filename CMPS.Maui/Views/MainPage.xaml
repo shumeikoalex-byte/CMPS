@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:CMPS.Maui.Views"
+             xmlns:viewmodels="clr-namespace:CMPS.Maui.ViewModels"
+             x:DataType="viewmodels:MainPageViewModel"
+             x:Class="CMPS.Maui.Views.MainPage"
+             BackgroundColor="{DynamicResource PageBackground}">
+
+    <Grid RowDefinitions="60,*"
+          ColumnDefinitions="250,*,300">
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="3"
+              BackgroundColor="{DynamicResource TopBarBackground}"
+              ColumnDefinitions="*,Auto">
+            <HorizontalStackLayout x:Name="TopMenu"
+                                    Grid.Column="0" Padding="24,0"
+                                    Spacing="32"
+                                    VerticalOptions="Center">
+
+                <Grid>
+                    <Label Text="Projects"
+                           Style="{StaticResource TopBarItemStyle}"/>
+                    <BoxView HeightRequest="2"
+                             VerticalOptions="End"
+                             BackgroundColor="Black"/>
+                </Grid>
+
+                <Label Text="Task Manager"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Time Clock"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Contacts"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Leads"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Templates"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Reports"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Settings"
+                       Style="{StaticResource TopBarItemStyle}"/>
+
+                <Label Text="Community"
+                       Style="{StaticResource TopBarItemStyle}"/>
+            </HorizontalStackLayout>
+
+            <Button Text="Add To-do" 
+                    Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}"
+                    HorizontalOptions="End"
+                    Margin="10,0,24,0" Command="{Binding AddTodoCommand}"/>
+
+        </Grid>
+
+        <ScrollView Grid.Row="1" Grid.Column="0"
+                    BackgroundColor="{DynamicResource NavBackground}"
+                    Padding="16,24">
+            <VerticalStackLayout Spacing="24">
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="PROJECTS" Style="{StaticResource NavSectionHeaderStyle}" />
+                    <Label Text="New Project" 
+                           Style="{StaticResource NavItemStyle}" 
+                           TextColor="{DynamicResource PrimaryColor}"
+                           FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NewProjectCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <CollectionView ItemsSource="{Binding Projects}" SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedProject}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding Name}" Style="{StaticResource NavItemStyle}" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="FINANCIALS" Style="{StaticResource NavSectionHeaderStyle}" />
+                    <Label Text="Summary" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="SummaryPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Estimate" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="EstimatePage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Proposals" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="ProposalsPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Bids" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="BidsPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Purchase Orders" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="PurchaseOrdersPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Change Orders" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="ChangeOrdersPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Budget" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="BudgetPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Invoices" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="InvoicesPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="PROJECT MANAGEMENT" Style="{StaticResource NavSectionHeaderStyle}" />
+                    <Label Text="Schedule" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="SchedulePage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Hours" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="HoursPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Specs &amp; Selections" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="SpecsSelectionsPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Messages" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="MessagesPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="To-Dos" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="TodosPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Job Log" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="JobLogPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Files" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="FilesPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Photos" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="PhotosPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Warranty Requests" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="WarrantyRequestsPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Project Setup" Style="{StaticResource NavItemStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" 
+                                                  CommandParameter="ProjectSetupPage"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1" Grid.Column="1" Padding="24">
+            <VerticalStackLayout Spacing="24">
+                <Label Text="Project Overview" Style="{StaticResource H1Style}" />
+
+                <Border Style="{StaticResource CardFrameStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Progress" Style="{StaticResource H2Style}" />
+                        <ProgressBar Progress="0.75" />
+                        <Label Text="75% Completed" Style="{StaticResource BodyTextStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource CardFrameStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Alerts &amp; Updates" Style="{StaticResource H2Style}" />
+                        <Label Text="• New task added: Review blueprints" Style="{StaticResource BodyTextStyle}" />
+                        <Label Text="• Invoice #2023-001 paid" Style="{StaticResource BodyTextStyle}" />
+                        <Label Text="• Material delivery scheduled for tomorrow" Style="{StaticResource BodyTextStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource CardFrameStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Recent Photos" Style="{StaticResource H2Style}" />
+                        <FlexLayout Wrap="Wrap" JustifyContent="SpaceAround">
+                            <Image Source="placeholder_photo1.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Margin="5" />
+                            <Image Source="placeholder_photo2.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Margin="5" />
+                            <Image Source="placeholder_photo3.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Margin="5" />
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1" Grid.Column="2" BackgroundColor="{DynamicResource InfoBackground}" Padding="16,24">
+            <VerticalStackLayout Spacing="24">
+                <Border Style="{StaticResource CardFrameStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="My Tasks" Style="{StaticResource H2Style}" />
+                        <Label Text="• Complete daily report (Overdue)" TextColor="Red" Style="{StaticResource BodyTextStyle}" />
+                        <Label Text="• Schedule client meeting (Today)" Style="{StaticResource BodyTextStyle}" />
+                        <Label Text="• Order new materials (Tomorrow)" Style="{StaticResource BodyTextStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource CardFrameStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Finances" Style="{StaticResource H2Style}" />
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="5">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Budget:" Style="{StaticResource BodyTextStyle}" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="$100,000" Style="{StaticResource BodyTextStyle}" FontAttributes="Bold" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="Spent:" Style="{StaticResource BodyTextStyle}" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="$75,000" Style="{StaticResource BodyTextStyle}" FontAttributes="Bold" />
+                            <Label Grid.Row="2" Grid.Column="0" Text="Remaining:" Style="{StaticResource BodyTextStyle}" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="$25,000" Style="{StaticResource BodyTextStyle}" FontAttributes="Bold" TextColor="{DynamicResource PrimaryColor}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

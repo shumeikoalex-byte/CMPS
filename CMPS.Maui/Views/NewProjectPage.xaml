@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CMPS.Maui.Views.NewProjectPage"
+    Title="New Project"
+    BackgroundColor="{DynamicResource PageBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="32" Padding="24,0">
+
+            <Label Text="New Project"
+                   Style="{StaticResource H1Style}"/>
+
+            <Grid ColumnDefinitions="200, *" RowSpacing="20" ColumnSpacing="24">
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="Project Name"
+                       Style="{StaticResource FormLabelStyle}"/>
+                <Entry Grid.Row="0" Grid.Column="1"
+                       Placeholder="Enter project name"
+                       Style="{StaticResource TextEntryStyle}"
+                       Text="{Binding ProjectName}"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Group"
+                       Style="{StaticResource FormLabelStyle}"/>
+                <CollectionView Grid.Row="1" Grid.Column="1"
+                                x:Name="GroupChips"
+                                SelectionMode="Multiple"
+                                ItemsSource="{Binding GroupOptions}" >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="8,4" Margin="4"
+                                    StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="1"
+                                    Stroke="#ECECEC"
+                                    BackgroundColor="#ECECEC">
+                                <Label Text="{Binding}" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Location"
+                       Style="{StaticResource FormLabelStyle}" />
+                <Entry Grid.Row="2" Grid.Column="1" Placeholder="Address"
+                       Style="{StaticResource TextEntryStyle}"
+                       Text="{Binding Address}"/>
+                <Entry Grid.Row="3" Grid.Column="1" Placeholder="Address 2 (lot, unit or building #)"
+                       Style="{StaticResource TextEntryStyle}" />
+
+                <Grid Grid.Row="4" Grid.Column="1" ColumnDefinitions="*,120,120" ColumnSpacing="8">
+                    <Entry Placeholder="City" Style="{StaticResource TextEntryStyle}" />
+                    <Entry Grid.Column="1" Placeholder="State/Province" Style="{StaticResource TextEntryStyle}" />
+                    <Entry Grid.Column="2" Placeholder="Postal Code" Style="{StaticResource TextEntryStyle}" />
+                </Grid>
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Phase"
+                       Style="{StaticResource FormLabelStyle}" />
+                <VerticalStackLayout Grid.Row="5" Grid.Column="1" Spacing="8">
+                    <RadioButton Content="Prospect"
+                                 GroupName="Phase"
+                                 IsChecked="True" />
+                    <RadioButton Content="Active" GroupName="Phase" />
+                    <RadioButton Content="Warranty" GroupName="Phase" />
+                </VerticalStackLayout>
+
+                <Label Grid.Row="6" Grid.Column="0" Text="Financial Structure"
+                       Style="{StaticResource FormLabelStyle}" />
+                <VerticalStackLayout Grid.Row="6" Grid.Column="1" Spacing="8">
+                    <RadioButton Content="Fixed Price" GroupName="Finance" IsChecked="True" />
+                    <RadioButton Content="Open Book" GroupName="Finance" />
+                </VerticalStackLayout>
+
+                <Label Grid.Row="7" Grid.Column="0" Text="Estimates &amp; Job Costing"
+                       Style="{StaticResource FormLabelStyle}" />
+                <VerticalStackLayout Grid.Row="7" Grid.Column="1" Spacing="8">
+                    <RadioButton Content="On" GroupName="Costing" IsChecked="True" />
+                    <RadioButton Content="Off" GroupName="Costing" />
+                </VerticalStackLayout>
+
+                <Label Grid.Row="8" Grid.Column="0" Text="Use Schedule Template"
+                       Style="{StaticResource FormLabelStyle}" />
+                <Picker Grid.Row="8" Grid.Column="1"
+                        ItemsSource="{Binding ScheduleTemplates}"
+                        Style="{StaticResource PickerStyle}" />
+
+            </Grid>
+
+            <Button x:Name="OptionalToggle"
+                    Text="Show optional settings"
+                    Style="{StaticResource LinkButtonStyle}"
+                    Clicked="OnToggleOptional" />
+
+            <VerticalStackLayout x:Name="OptionalSection" IsVisible="False" Spacing="16">
+                <Label Text="Optional Settings (Example)" Style="{StaticResource CardHeaderStyle}"/>
+                <Entry Placeholder="Optional Field 1" Style="{StaticResource TextEntryStyle}"/>
+                <Entry Placeholder="Optional Field 2" Style="{StaticResource TextEntryStyle}"/>
+            </VerticalStackLayout>
+
+
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="16">
+                <Button Text="Cancel"
+                        Grid.Column="1"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Clicked="OnCancel" />
+                <Button Text="Add Project"
+                        Grid.Column="2"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Clicked="OnAddProject" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,98 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>CMPS.Maui</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<ApplicationTitle>CMPS.Maui</ApplicationTitle>
+
+		<ApplicationId>com.companyname.cmps.maui</ApplicationId>
+
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="MediatR" Version="12.5.0" />
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CMPS.ProjectManagement.Application\CMPS.ProjectManagement.Application.csproj" />
+		<ProjectReference Include="..\CMPS.Financials.Application\CMPS.Financials.Application.csproj" />
+		<ProjectReference Include="..\CMPS.EstimatingAndResource.Application\CMPS.EstimatingAndResource.Application.csproj" />
+		<ProjectReference Include="..\CMPS.BimData.Application\CMPS.BimData.Application.csproj" />
+		<ProjectReference Include="..\CMPS.Reporting.Application\CMPS.Reporting.Application.csproj" />
+		<ProjectReference Include="..\CMPS.ActorsAndRoles.Application\CMPS.ActorsAndRoles.Application.csproj" />
+		<ProjectReference Include="..\CMPS.IdentityAndAccess.Application\CMPS.IdentityAndAccess.Application.csproj" />
+
+		<ProjectReference Include="..\CMPS.ProjectManagement.Infrastructure\CMPS.ProjectManagement.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.Financials.Infrastructure\CMPS.Financials.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.EstimatingAndResource.Infrastructure\CMPS.EstimatingAndResource.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.BimData.Infrastructure\CMPS.BimData.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.Reporting.Infrastructure\CMPS.Reporting.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.ActorsAndRoles.Infrastructure\CMPS.ActorsAndRoles.Infrastructure.csproj" />
+		<ProjectReference Include="..\CMPS.IdentityAndAccess.Infrastructure\CMPS.IdentityAndAccess.Infrastructure.csproj" />
+
+		<ProjectReference Include="..\CMPS.SharedKernel\CMPS.SharedKernel.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\NewProjectPage.xaml.cs">
+	    <DependentUpon>NewProjectPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\NewProjectPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>
