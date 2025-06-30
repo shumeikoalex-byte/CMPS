@@ -1,0 +1,28 @@
+﻿CMPS.EstimatingAndResource.Domain
+Відповідає за кошториси та управління ресурсами (люди, обладнання, матеріали).
+
+CMPS.EstimatingAndResource.Domain/
+├── CMPS.EstimatingAndResource.Domain.csproj
+├── Aggregates/
+│   ├── Estimate.cs         // Корінь агрегату для кошторису
+│   └── ResourcePool.cs     // Корінь агрегату для пулу ресурсів
+├── Entities/
+│   ├── EstimateItem.cs     // Елемент кошторису
+│   ├── Resource.cs         // Конкретний ресурс (наприклад, екскаватор, інженер)
+│   ├── ResourceAssignment.cs // Призначення ресурсу до завдання/кошторису
+├── ValueObjects/
+│   ├── Cost.cs             // Об'єкт-значення для витрат
+│   ├── Quantity.cs         // Об'єкт-значення для кількості
+│   ├── ResourceIdentifier.cs // Об'єкт-значення для ідентифікації ресурсу
+├── Enums/
+│   ├── ResourceType.cs     // Наприклад, Labor, Equipment, Material
+│   └── UnitOfMeasure.cs    // Наприклад, Hour, Piece, m3
+├── Exceptions/
+│   ├── EstimateNotFoundException.cs
+│   └── InsufficientResourceException.cs
+├── Interfaces/
+│   ├── IEstimateRepository.cs
+│   └── IResourceRepository.cs
+└── Events/
+    ├── EstimateApprovedEvent.cs
+    └── ResourceAllocatedEvent.cs

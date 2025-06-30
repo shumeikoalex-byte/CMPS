@@ -1,0 +1,31 @@
+﻿CMPS.Financials.Domain
+Відповідає за фінансові операції, бюджети, рахунки-фактури.
+
+CMPS.Financials.Domain/
+├── CMPS.Financials.Domain.csproj
+├── Aggregates/
+│   ├── Budget.cs           // Корінь агрегату для бюджету
+│   └── Invoice.cs          // Корінь агрегату для рахунку-фактури
+│   └── Transaction.cs      // Корінь агрегату для фінансової транзакції
+├── Entities/
+│   ├── BudgetItem.cs       // Елемент бюджету
+│   ├── InvoiceLineItem.cs  // Позиція в рахунку
+│   ├── Payment.cs          // Платіж
+├── ValueObjects/
+│   ├── Money.cs            // Об'єкт-значення для грошових сум (з валютою)
+│   ├── AccountNumber.cs    // Номер рахунку
+│   └── TaxRate.cs          // Об'єкт-значення для податкової ставки
+├── Enums/
+│   ├── TransactionType.cs  // Наприклад, Income, Expense
+│   └── InvoiceStatus.cs    // Наприклад, Draft, Issued, Paid, Overdue
+├── Exceptions/
+│   ├── BudgetExceededException.cs
+│   └── InvoiceNotFoundException.cs
+├── Interfaces/
+│   ├── IBudgetRepository.cs
+│   ├── IInvoiceRepository.cs
+│   └── ITransactionRepository.cs
+└── Events/
+    ├── BudgetApprovedEvent.cs
+    ├── InvoicePaidEvent.cs
+    └── FundsTransferredEvent.cs

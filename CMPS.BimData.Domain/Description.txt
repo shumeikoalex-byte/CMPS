@@ -1,0 +1,24 @@
+﻿CMPS.BimData.Domain
+Відповідає за управління BIM-даними (інформаційним моделюванням будівель).
+
+CMPS.BimData.Domain/
+├── CMPS.BimData.Domain.csproj
+├── Aggregates/
+│   └── BimModel.cs         // Корінь агрегату для BIM-моделі
+├── Entities/
+│   ├── BimElement.cs       // Елемент всередині BIM-моделі (наприклад, стіна, двері)
+│   ├── BimProperty.cs      // Властивість елемента
+│   └── BimRelationship.cs  // Зв'язок між елементами
+├── ValueObjects/
+│   ├── BimId.cs            // Об'єкт-значення для унікального BIM ID
+│   ├── Coordinates.cs      // Об'єкт-значення для просторових координат
+│   └── Material.cs         // Об'єкт-значення для матеріалу
+├── Enums/
+│   └── BimElementType.cs   // Наприклад, Wall, Door, Window
+├── Exceptions/
+│   └── BimModelNotFoundException.cs
+├── Interfaces/
+│   └── IBimModelRepository.cs // Інтерфейс репозиторію для BimModel Aggregate
+└── Events/
+    ├── BimModelCreatedEvent.cs
+    └── BimElementModifiedEvent.cs

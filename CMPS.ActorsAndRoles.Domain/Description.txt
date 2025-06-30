@@ -1,0 +1,26 @@
+﻿CMPS.ActorsAndRoles.Domain
+Відповідає за управління акторами (користувачами) та їхніми ролями.
+
+CMPS.ActorsAndRoles.Domain/
+├── CMPS.ActorsAndRoles.Domain.csproj
+├── Aggregates/
+│   └── User.cs             // Корінь агрегату, наприклад, User з пов'язаними ролями
+├── Entities/
+│   └── Role.cs             // Сутність ролі, частина агрегату User або окрема
+├── ValueObjects/
+│   ├── Email.cs            // Об'єкт-значення для email
+│   ├── PasswordHash.cs     // Об'єкт-значення для хешу пароля
+│   └── Permissions.cs      // Об'єкт-значення для набору дозволів
+├── Enums/
+│   └── UserStatus.cs       // Наприклад, Active, Inactive, Pending
+├── Exceptions/
+│   ├── UserNotFoundException.cs
+│   └── RoleAlreadyExistsException.cs
+├── Interfaces/
+│   ├── IUserRepository.cs  // Інтерфейс репозиторію для User Aggregate
+│   └── IRoleRepository.cs  // Інтерфейс репозиторію для Role (якщо ролі є окремим агрегатом)
+├── Services/
+│   └── UserDomainService.cs // Доменний сервіс для логіки, яка не належить до конкретної сутності
+└── Events/
+    ├── UserRegisteredEvent.cs
+    └── UserRoleAssignedEvent.cs

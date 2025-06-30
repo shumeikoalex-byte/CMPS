@@ -1,0 +1,29 @@
+﻿CMPS.IdentityAndAccess.Domain
+Цей контекст вже був наведений вище як приклад, але повторимо його для повноти.
+
+CMPS.IdentityAndAccess.Domain/
+├── CMPS.IdentityAndAccess.Domain.csproj
+├── Aggregates/
+│   └── User.cs             // Корінь агрегату, наприклад, User з пов'язаними ролями
+├── Entities/
+│   └── Role.cs             // Сутність ролі, частина агрегату User або окрема
+│   └── Permission.cs       // Сутність дозволу
+├── ValueObjects/
+│   ├── Email.cs            // Об'єкт-значення для email
+│   ├── PasswordHash.cs     // Об'єкт-значення для хешу пароля
+│   └── AccessToken.cs      // Об'єкт-значення для токена доступу
+├── Enums/
+│   └── UserStatus.cs       // Наприклад, Active, Inactive, Pending
+├── Exceptions/
+│   ├── UserNotFoundException.cs
+│   └── RoleAlreadyExistsException.cs
+│   └── InvalidCredentialsException.cs
+├── Interfaces/
+│   ├── IUserRepository.cs  // Інтерфейс репозиторію для User Aggregate
+│   └── IRoleRepository.cs  // Інтерфейс репозиторію для Role (якщо ролі є окремим агрегатом)
+├── Services/
+│   └── AuthenticationService.cs // Доменний сервіс для логіки автентифікації/авторизації
+└── Events/
+    ├── UserRegisteredEvent.cs
+    ├── UserRoleAssignedEvent.cs
+    └── PasswordChangedEvent.cs
