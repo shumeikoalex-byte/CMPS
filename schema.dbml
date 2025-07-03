@@ -1,0 +1,786 @@
+Table Accounts {
+  Id int [pk]
+  CustomClassificationId int
+  IfrsAccountId varchar (255)
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  Code varchar (255)
+  PartyReference varchar (255)
+  AgentId int
+  IfrsNoteId varchar (255)
+  ResponsibilityCenterId int
+  ResourceIsFixed bit [not null, default: 1]
+  ResourceId int
+  ResponsibleActorId int
+  ResponsibleRoleId int
+  CustodianActorId int
+  CustodianRoleId int
+  IsActive bit [not null, default: 1]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table AgentRelations {
+  AgentId int [not null]
+  AgentRelationType varchar (255) [not null]
+  AgentSubRelationType varchar (255)
+  IsActive bit [not null, default: 1]
+  Code varchar (255)
+  StartDate datetime2 (7) [default: (CONVERT (date, SYSDATETIME()))]
+  JobTitle varchar (255)
+  BasicSalary money
+  TransporationAllowance money
+  OvertimeRate money
+  PerDiemRate money
+  SupplierRating int
+  PaymentTerms varchar (255)
+  CustomerRating int
+  ShippingAddress varchar (255)
+  BillingAddress varchar (255)
+  CreditLine money [default: 0]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Agents {
+  Id int [pk]
+  IsActive bit [not null, default: 1]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  Code varchar (255)
+  SystemCode varchar (255)
+  AgentType varchar (255)
+  IsRelated bit [not null, default: 0]
+  TaxIdentificationNumber varchar (255)
+  IsLocal bit
+  Citizenship char(2)
+  Facebook varchar (255)
+  Instagram varchar (255)
+  Twitter varchar (255)
+  PreferredContactChannel1 int
+  PreferredContactAddress1 varchar (255)
+  PreferredContactChannel2 int
+  PreferredContactAddress2 varchar (255)
+  BirthDateTime datetime2 (7)
+  TitleId int
+  Gender int
+  ResidentialAddress varchar (1024)
+  ImageId int
+  MaritalStatus int
+  NumberOfChildren tinyint
+  Religion char (1)
+  Race int
+  TribeId int
+  RegionId int
+  EducationLevelId int
+  EducationSublevelId int
+  BankId int
+  BankAccountNumber varchar (255)
+  OrganizationType int
+  WebSite varchar (255)
+  ContactPerson varchar (255)
+  RegisteredAddress varchar (1024)
+  OwnershipType varchar (255)
+  OwnershipPercent decimal [default: 0]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table DocumentAssignments {
+  DocumentId int [pk]
+  AssigneeId int [not null]
+  Comment varchar (1024)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  OpenedAt datetimeoffset
+}
+Table DocumentAssignmentsHistory {
+  Id int [pk]
+  DocumentId int [not null]
+  AssigneeId int [not null]
+  Comment varchar (1024)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  OpenedAt datetimeoffset
+}
+Table DocumentLineEntries {
+  Id int [pk]
+  DocumentLineId int [not null]
+  EntryNumber int [not null]
+  Direction smallint [not null]
+  AccountId int [not null]
+  IfrsNoteId varchar (255)
+  ResourceId int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'FunctionalCurrencyId'))]
+  InstanceId int
+  BatchCode varchar (255)
+  DueDate date
+  Quantity vtype [not null, default: 0]
+  MoneyAmount money [not null, default: 0]
+  Mass decimal (18,2) [not null, default: 0]
+  Volume decimal (18,2) [not null, default: 0]
+  Area decimal (18,2) [not null, default: 0]
+  Length decimal (18,2) [not null, default: 0]
+  Time decimal (18,2) [not null, default: 0]
+  Count decimal (18,2) [not null, default: 0]
+  Value vtype [not null, default: 0]
+  Memo varchar (255)
+  ExternalReference varchar (255)
+  AdditionalReference varchar (255)
+  RelatedResourceId int
+  RelatedAccountId int
+  RelatedQuantity money
+  RelatedMoneyAmount money [not null, default: 0]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table DocumentLines {
+  Id int [pk]
+  DocumentId int [not null]
+  LineTypeId varchar (255) [not null]
+  TemplateLineId int
+  ScalingFactor float
+  AgentId int
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table DocumentSignatures {
+  Id int [pk]
+  DocumentId int [not null]
+  State varchar (255) [not null]
+  ReasonId int
+  ReasonDetails varchar(1024)
+  SignedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  AgentId int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  RoleId int
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  RevokedAt datetimeoffset
+  RevokedById int
+}
+Table DocumentStatesHistory {
+  Id int [pk]
+  DocumentId int [not null]
+  State varchar (1024)
+  StateAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+}
+Table DocumentTypes {
+  Id varchar (255) [pk]
+  IsAuthorizedOrRejected bit [default: (1)]
+  IsCompletedOrFailed bit [default: (1)]
+  IsPostedOrInvalid bit [default: (1)]
+  Code varchar (255) [not null]
+  Description varchar (255) [not null]
+  Description2 varchar (255)
+  Description3 varchar (255)
+  DefaultVoucherTypeId varchar (255)
+  CustomerLabel varchar (255)
+  SupplierLabel varchar (255)
+  EmployeeLabel varchar (255)
+  FromCustodyAccountLabel varchar (255)
+  ToCustodyAccountLabel varchar (255)
+}
+Table Documents {
+  Id int [pk]
+  DocumentTypeId varchar (255) [not null]
+  SerialNumber int [not null]
+  DocumentDate date [not null, default: CONVERT (DATE, SYSDATETIME())]
+  State varchar (255) [not null, default: N'Draft']
+  EvidenceTypeId varchar(255) [not null]
+  VoucherBookletId int
+  VoucherNumericReference int
+  BlobName varchar(255)
+  DocumentLookup1Id int
+  DocumentLookup2Id int
+  DocumentLookup3Id int
+  DocumentText1 varchar (255)
+  DocumentText2 varchar (255)
+  Memo varchar (255)
+  MemoIsCommon bit [default: 1]
+  CustomerAccountId int
+  CustomerAccountIsCommon bit [default: 1]
+  SupplierAccountId int
+  SupplierAccountIsCommon bit [default: 1]
+  EmployeeAccountId int
+  EmployeeAccountIsCommon bit [default: 1]
+  CurrencyId int
+  CurrencyIsCommon bit [default: 1]
+  SourceStockAccountId int
+  SourceStockAccountIdIsCommon bit [default: 1]
+  DestinationStockAccountId int
+  DestinationStockAccountIdIsCommon bit [default: 1]
+  InvoiceReference varchar (255)
+  InvoiceReferenceIsCommon bit [default: 1]
+  Frequency varchar (255) [not null, default: (N'OneTime')]
+  Repetitions int [not null, default: 0]
+  EndDate as ( case when [frequency] = n'onetime' then [documentdate] when [frequency] = n'daily' then dateadd(day, [repetitions], [documentdate])
+  NeededBy date
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ExchangeRatesHistory {
+  Date date
+  BaseCurrency char (3)
+  TargetCurrency char (3)
+  ExchangeRate float [not null]
+  CreatedAt datetimeoffset [not null]
+  CreatedById int [not null]
+  ModifiedAt datetimeoffset [not null]
+  ModifiedById int [not null]
+}
+Table IfrsAccounts {
+  Id varchar (255) [pk]
+  ParentNode as
+  IsAggregate bit [not null, default: 1]
+  IfrsNoteSetting varchar (255) [not null, default: 'N/A']
+  AgentAccountSetting varchar (255) [not null, default: 'N/A']
+  AgentRelationTypeList varchar (1024)
+  AgentAccountLabel varchar (255)
+  AgentAccountLabel2 varchar (255)
+  AgentAccountLabel3 varchar (255)
+  ResourceSetting varchar (255) [not null, default: 'N/A']
+  ResourceTypeList varchar (1024)
+  ResourceLabel varchar (255)
+  ResourceLabel2 varchar (255)
+  ResourceLabel3 varchar (255)
+  DebitExternalReferenceSetting varchar (255) [not null, default: 'N/A']
+  DebitReferenceLabel varchar (255)
+  DebitReferenceLabel2 varchar (255)
+  DebitReferenceLabel3 varchar (255)
+  CreditExternalReferenceSetting varchar (255) [not null, default: 'N/A']
+  CreditReferenceLabel varchar (255)
+  CreditReferenceLabel2 varchar (255)
+  CreditReferenceLabel3 varchar (255)
+  DebitAdditionalReferenceSetting varchar (255) [not null, default: 'N/A']
+  DebitRelatedReferenceLabel varchar (255)
+  DebitRelatedReferenceLabel2 varchar (255)
+  DebitRelatedReferenceLabel3 varchar (255)
+  CreditAdditionalReferenceSetting varchar (255) [not null, default: 'N/A']
+  CreditRelatedReferenceLabel varchar (255)
+  CreditRelatedReferenceLabel2 varchar (255)
+  CreditRelatedReferenceLabel3 varchar (255)
+  RelatedResourceSetting varchar (255) [not null, default: 'N/A']
+  RelatedResourceTypeList varchar (1024)
+  RelatedResourceLabel varchar (255)
+  RelatedResourceLabel2 varchar (255)
+  RelatedResourceLabel3 varchar (255)
+  RelatedAgentAccountLabel varchar (255)
+  RelatedAgentAccountLabel2 varchar (255)
+  RelatedAgentAccountLabel3 varchar (255)
+  // Node HIERARCHYID
+}
+Table IfrsConcepts {
+  Id varchar (255) [pk]
+  IsActive bit [not null, default: 1]
+  Label varchar (1024) [not null]
+  Label2 varchar (1024)
+  Label3 varchar (1024)
+  Documentation varchar (max)
+  Documentation2 varchar (max)
+  Documentation3 varchar (max)
+  EffectiveDate datetime2(7) [not null]
+  ExpiryDate datetime2(7) [not null]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table IfrsDisclosureDetails {
+  Id int [pk]
+  IfrsDisclosureId varchar (255) [not null]
+  Value varchar (255)
+  ValidSince date [not null, default: '0001.01.01']
+  IsDeleted bit [not null, default: 0]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table IfrsNotes {
+  Id varchar (255) [pk]
+  ParentId varchar (255)
+  IsAggregate bit [not null, default: 1]
+  ForDebit bit [not null, default: 1]
+  ForCredit bit [not null, default: 1]
+  ParentNode as
+  // Node HIERARCHYID
+}
+Table IfrsAccountsIfrsNotes {
+  Id int [pk]
+  IfrsAccountId varchar (255) [not null]
+  IfrsNoteId varchar (255) [not null]
+  Direction smallint [not null]
+}
+Table LineTypes {
+  Id varchar (255) [pk]
+  Description varchar (255)
+  Description2 varchar (255)
+  Description3 varchar (255)
+  CustomerLabel varchar (255)
+  SupplierLabel varchar (255)
+  EmployeeLabel varchar (255)
+  FromCustodyAccountLabel varchar (255)
+  ToCustodyAccountLabel varchar (255)
+}
+Table LineTypesSpecifications {
+  LineTypeId varchar (255)
+  EntryNumber int
+  DirectionIsVisible bit [not null, default: 0]
+  DirectionIsEditableTill varchar (255) [not null, default: N'Posted']
+  DirectionExpression varchar (255)
+  DirectionEntryNumber varchar (255)
+  Direction smallint
+  AccountIdIsVisible bit [not null, default: 0]
+  AccountIsEditableTill varchar (255) [not null, default: N'Posted']
+  AccountIdIfrsFilter varchar (255)
+  AccountIdExpression varchar (255)
+  AccountIdEntryNumber int
+  IfrsNoteIdIsVisible bit [not null, default: 0]
+  IfrsNoteIdIsEditableTill varchar (255) [not null, default: N'Posted']
+  IfrsNoteIdExpression varchar (255)
+  IfrsNoteIdEntryNumber int
+  IfrsNoteId varchar (255)
+  ResourceIdIsVisible bit [not null, default: 0]
+  ResourceIdIsEditableTill varchar (255) [not null, default: N'Posted']
+  ResourceIdExpression varchar (255)
+  ResourceIdEntryNumber int
+  ResourceId int
+  InstanceIdIsVisible bit [not null, default: 0]
+  InstanceIdExpression varchar (255)
+  InstanceIdEntryNumber int
+  BatchCodeIsVisible bit [not null, default: 0]
+  BatchCodeExpression varchar (255)
+  BatchCodeEntryNumber int
+  DueDateIsVisible bit [not null, default: 0]
+  DueDateExpression varchar (255)
+  DueDateEntryNumber int
+  QuantityIsVisible bit [not null, default: 0]
+  QuantityExpression varchar (255)
+  QuantityEntryNumber int
+  Quantity vtype
+  MoneyAmountIsVisible bit [not null, default: 0]
+  MoneyAmountExpression varchar (255)
+  MoneyAmountEntryNumber int
+  MassIsVisible bit [not null, default: 0]
+  MassExpression varchar (255)
+  MassEntryNumber int
+  VolumeIsVisible bit [not null, default: 0]
+  VolumeExpression varchar (255)
+  VolumeEntryNumber int
+  AreaIsVisible bit [not null, default: 0]
+  AreaExpression varchar (255)
+  AreaEntryNumber int
+  LengthIsVisible bit [not null, default: 0]
+  LengthExpression varchar (255)
+  LengthEntryNumber int
+  TimeIsVisible bit [not null, default: 0]
+  TimeExpression varchar (255)
+  TimeEntryNumber int
+  CountIsVisible bit [not null, default: 0]
+  CountExpression varchar (255)
+  CountEntryNumber int
+  Count int
+  ValueIsVisible bit [not null, default: 0]
+  ValueExpression varchar (255)
+  ValueEntryNumber int
+  MemoIsVisible bit [not null, default: 0]
+  MemoExpression varchar (255)
+  MemoEntryNumber int
+  ExternalReferenceIsVisible bit [not null, default: 0]
+  ExternalReferenceExpression varchar (255)
+  ExternalReferenceEntryNumber int
+  AdditionalReferenceIsVisible bit [not null, default: 0]
+  AdditionalReferenceExpression varchar (255)
+  RelatedResourceId int
+  RelatedAgentIsVisible bit [not null, default: 0]
+  RelatedAgentExpression varchar (255)
+  RelatedAgentEntryNumber int
+  RelatedQuantity money
+  RelatedMoneyAmount money [not null, default: 0]
+}
+Table LocalUsers {
+  Id int [pk]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  PreferredLanguage char(2) [not null, default: (N'en')]
+  ProfilePhoto varbinary (max)
+  AgentId int
+  SortKey decimal (9,4)
+}
+Table MeasurementUnits {
+  Id int [pk]
+  UnitType varchar (255) [not null]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  Description varchar (255) [not null]
+  Description2 varchar (255)
+  Description3 varchar (255)
+  UnitAmount float [not null, default: 1]
+  BaseAmount float [not null, default: 1]
+  IsActive bit [not null, default: 1]
+  IsDeleted bit [not null, default: 0]
+  Code varchar (255)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Notifications {
+  Id int [pk]
+  RecipientId int [not null]
+  ContactChannel varchar (255) [not null]
+  ContactAddress varchar (255) [not null]
+  Message varchar (1024)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Permissions {
+  Id int [pk]
+  RoleId int [not null]
+  ViewId varchar (255) [not null]
+  Level varchar (255) [not null]
+  Criteria varchar(1024)
+  Memo varchar (255)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ProductCategories {
+  Id int [pk]
+  ParentId int
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  Code varchar (255)
+  IsActive bit [not null, default: 1]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ParentNode as
+  // Node HIERARCHYID NOT NULL
+}
+Table Reconciliation {
+  Id int [pk]
+  EntryId1 int [not null]
+  EntryId2 int [not null]
+  Amount money [not null]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ResourceInstances {
+  Id int [pk]
+  ResourceId int [not null]
+  InstanceTypeId int
+  Code varchar (255) [not null]
+  ProductionDate date
+  ExpiryDate date
+  Beneficiary varchar (255)
+  IssuingBankAccountId int
+  IssuingBankId int
+  InstanceString1 varchar (255)
+  InstanceString2 varchar (255)
+  InstanceLookup1Id int
+  InstanceLookup2Id int
+  InstanceLookup3Id int
+  InstanceLookup4Id int
+  InstanceLookup5Id int
+  IsActive bit [not null, default: 1]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ResourceLookup1s {
+  Id int [pk]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  IsActive bit [not null, default: 1]
+  IsDeleted bit [not null, default: 0]
+  SortKey decimal (9,4)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ResourceTypes {
+  Id varchar (255) [pk]
+  IsAuthorizedOrRejected bit [default: (1)]
+  IsCompletedOrFailed bit [default: (1)]
+  IsPostedOrInvalid bit [default: (1)]
+  Code varchar (255) [not null]
+  Description varchar (255) [not null]
+  Description2 varchar (255)
+  Description3 varchar (255)
+  DefaultVoucherTypeId varchar (255)
+  FromCustodyAccountLabel varchar (50)
+  ToCustodyAccountLabel varchar (50)
+}
+Table Resources {
+  Id int [pk]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  IsActive bit [not null, default: 1]
+  IsFungible bit [not null, default: 0]
+  IsBatch bit [not null, default: 0]
+  ValueMeasure varchar (255) [not null]
+  UnitId int [not null]
+  CurrencyId int
+  UnitPrice decimal
+  MassUnitId int
+  UnitMass decimal
+  VolumeUnitId int
+  UnitVolume decimal
+  AreaUnitId int
+  UnitArea decimal
+  LengthUnitId int
+  UnitLength decimal
+  TimeUnitId int
+  UnitTime decimal
+  CountUnitId int
+  Code varchar (255)
+  SystemCode varchar (255)
+  Memo varchar (2048)
+  CustomsReference varchar (255)
+  UniversalProductCode varchar (255)
+  PreferredSupplierId int
+  ExpenseAccountId int
+  RevenueAccountId int
+  ProductCategoryId int
+  ResourceLookup1Id int
+  ResourceLookup2Id int
+  ResourceLookup3Id int
+  ResourceLookup4Id int
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table ResponsibilityCenters {
+  ResponsibilityDomain varchar (255) [not null]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  IsOperatingSegment bit [not null, default: 0]
+  IsActive bit [not null, default: 1]
+  ParentId int
+  Code varchar (255)
+  OperationId int
+  ProductCategoryId int
+  GeographicRegionId int
+  CustomerSegmentId int
+  TaxSegmentId int
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table RoleMemberships {
+  Id int [pk]
+  Userid int [not null]
+  RoleId int [not null]
+  Memo varchar (255)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Roles {
+  Id int [pk]
+  Name varchar (255) [not null]
+  Name2 varchar (255)
+  Name3 varchar (255)
+  IsPublic bit [not null, default: 0]
+  IsActive bit [not null, default: 1]
+  Code varchar (255)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Settings {
+  FunctionalCurrencyId int
+  ArchiveDate date [not null, default: ('1900.01.01')]
+  TenantLanguage2 varchar (255)
+  TenantLanguage3 varchar (255)
+  ResourceLookup1Label varchar (50)
+  ResourceLookup1Label2 varchar (50)
+  ResourceLookup1Label3 varchar (50)
+  ResourceLookup1sLabel varchar (50)
+  ResourceLookup2Label varchar (50)
+  ResourceLookup3Label varchar (50)
+  InstanceLookup1Label varchar (50)
+  InstanceLookup1Label2 varchar (50)
+  InstanceLookup1Label3 varchar (50)
+  InstanceLookup1sLabel varchar (50)
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId')) CONSTRAINT [FK_Settings__CreatedById] FOREIGN KEY ([CreatedById]) REFERENCES [dbo].[LocalUsers] ([Id])]
+}
+Table TemplateLines {
+  Id int [pk]
+  DocumentId int [not null]
+  TemplateLineType varchar (255) [not null]
+  ValidFrom datetime2(7) [not null, default: (CONVERT (date, SYSDATETIME()))]
+  ResourceId int
+  Quantity money [default: 1]
+  Price money
+  Currency int
+  VAT money
+  TOT money
+  AgentId int
+  MonthlyBasicSalary money
+  HourlyOvertimeRate money
+  DailyPerDiem money
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table Translations {
+  CultureId varchar (255)
+  Name varchar (255)
+  Value varchar(2048) [not null]
+  Tier varchar (255)
+}
+Table Views {
+  Id varchar (255) [pk]
+  IsActive bit [not null, default: 1]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  ModifiedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  ModifiedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+}
+Table VoucherBooklets {
+  Id int [pk]
+  VoucherTypeId varchar (255)
+  StringPrefix varchar (255) [not null, default: (N'')]
+  NumericLength int [default: (0)]
+  RangeStarts int [default: (1)]
+  RangeEnds int [default: (2147483647)]
+  IsActive bit [default: (1)]
+}
+Table VoucherTypes {
+  Id varchar (255) [pk]
+  Description varchar (255) [not null]
+  Description2 varchar (255)
+  Description3 varchar (255)
+  CustomerLabel varchar (50)
+  SupplierLabel varchar (50)
+  EmployeeLabel varchar (50)
+  FromCustodyAccountLabel varchar (50)
+  ToCustodyAccountLabel varchar (50)
+}
+Table WorkflowSignatories {
+  Id int [pk]
+  RoleId int
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  RevokedAt datetimeoffset
+  RevokedById int
+}
+Table Workflows {
+  Id int [pk]
+  FromState varchar (255) [not null]
+  ToState varchar (255) [not null]
+  CreatedAt datetimeoffset [not null, default: SYSDATETIMEOFFSET()]
+  CreatedById int [not null, default: CONVERT(INT, SESSION_CONTEXT(N'UserId'))]
+  RevokedAt datetimeoffset
+  RevokedById int
+}
+Ref: Accounts.IfrsAccountId > IfrsAccounts.Id
+Ref: Accounts.IfrsNoteId > IfrsNotes.Id
+Ref: Accounts.ResponsibilityCenterId > ResponsibilityCenters.Id
+Ref: Accounts.AgentId > Agents.Id
+Ref: Accounts.ResourceId > Resources.Id
+Ref: Accounts.CreatedById > LocalUsers.Id
+Ref: Accounts.ModifiedById > LocalUsers.Id
+Ref: AgentRelations.CreatedById > LocalUsers.Id
+Ref: AgentRelations.ModifiedById > LocalUsers.Id
+Ref: Agents.CreatedById > LocalUsers.Id
+Ref: Agents.ModifiedById > LocalUsers.Id
+Ref: DocumentAssignments.DocumentId > Documents.Id
+Ref: DocumentAssignments.AssigneeId > LocalUsers.Id
+Ref: DocumentAssignments.CreatedById > LocalUsers.Id
+Ref: DocumentAssignmentsHistory.DocumentId > Documents.Id
+Ref: DocumentAssignmentsHistory.AssigneeId > LocalUsers.Id
+Ref: DocumentAssignmentsHistory.CreatedById > LocalUsers.Id
+Ref: DocumentLineEntries.DocumentLineId > DocumentLines.Id
+Ref: DocumentLineEntries.AccountId > Accounts.Id
+Ref: DocumentLineEntries.IfrsNoteId > IfrsNotes.Id
+Ref: DocumentLineEntries.ResponsibilityCenterId > ResponsibilityCenters.Id
+Ref: DocumentLineEntries.ResourceId > Resources.Id
+Ref: DocumentLineEntries.InstanceId > ResourceInstances.Id
+Ref: DocumentLineEntries.CreatedById > LocalUsers.Id
+Ref: DocumentLines.DocumentId > Documents.Id
+Ref: DocumentLines.LineTypeId > LineTypes.Id
+Ref: DocumentLines.CreatedById > LocalUsers.Id
+Ref: DocumentSignatures.DocumentId > Documents.Id
+Ref: DocumentSignatures.AgentId > Agents.Id
+Ref: DocumentSignatures.CreatedById > LocalUsers.Id
+Ref: DocumentSignatures.RevokedById > LocalUsers.Id
+Ref: DocumentStatesHistory.DocumentId > Documents.Id
+Ref: Documents.DocumentTypeId > DocumentTypes.Id
+Ref: Documents.CreatedById > LocalUsers.Id
+Ref: Documents.ModifiedById > LocalUsers.Id
+Ref: IfrsAccounts.Id > IfrsConcepts.Id
+Ref: IfrsConcepts.CreatedById > LocalUsers.Id
+Ref: IfrsConcepts.ModifiedById > LocalUsers.Id
+Ref: IfrsDisclosureDetails.IfrsDisclosureId > IfrsDisclosures.Id
+Ref: IfrsDisclosureDetails.CreatedById > LocalUsers.Id
+Ref: IfrsDisclosureDetails.ModifiedById > LocalUsers.Id
+Ref: IfrsNotes.Id > IfrsConcepts.Id
+Ref: IfrsAccountsIfrsNotes.IfrsAccountId > IfrsAccounts.Id
+Ref: IfrsAccountsIfrsNotes.IfrsNoteId > IfrsNotes.Id
+Ref: LineTypesSpecifications.LineTypeId > LineTypes.Id
+Ref: LocalUsers.AgentId > Agents.Id
+Ref: Notifications.RecipientId > Agents.Id
+Ref: Permissions.RoleId > Roles.Id
+Ref: Permissions.ViewId > Views.Id
+Ref: Permissions.CreatedById > LocalUsers.Id
+Ref: Permissions.ModifiedById > LocalUsers.Id
+Ref: ProductCategories.ParentId > ProductCategories.Id
+Ref: ProductCategories.CreatedById > LocalUsers.Id
+Ref: ProductCategories.ModifiedById > LocalUsers.Id
+Ref: ResourceInstances.CreatedById > LocalUsers.Id
+Ref: ResourceLookup1s.CreatedById > LocalUsers.Id
+Ref: ResourceLookup1s.ModifiedById > LocalUsers.Id
+Ref: Resources.MassUnitId > MeasurementUnits.Id
+Ref: Resources.VolumeUnitId > MeasurementUnits.Id
+Ref: Resources.ProductCategoryId > ProductCategories.Id
+Ref: Resources.ResourceLookup1Id > ResourceLookup1s.Id
+Ref: ResponsibilityCenters.ParentId > ResponsibilityCenters.Id
+Ref: ResponsibilityCenters.CreatedById > LocalUsers.Id
+Ref: ResponsibilityCenters.ModifiedById > LocalUsers.Id
+Ref: RoleMemberships.Userid > LocalUsers.Id
+Ref: RoleMemberships.RoleId > Roles.Id
+Ref: RoleMemberships.CreatedById > LocalUsers.Id
+Ref: RoleMemberships.ModifiedById > LocalUsers.Id
+Ref: Roles.CreatedById > LocalUsers.Id
+Ref: Roles.ModifiedById > LocalUsers.Id
+Ref: Settings.ModifiedById > LocalUsers.Id
+Ref: Views.CreatedById > LocalUsers.Id
+Ref: Views.ModifiedById > LocalUsers.Id
+Ref: VoucherBooklets.VoucherTypeId > VoucherTypes.Id
+Ref: WorkflowSignatories.RoleId > Roles.Id
+Ref: WorkflowSignatories.CreatedById > LocalUsers.Id
+Ref: WorkflowSignatories.RevokedById > LocalUsers.Id
+Ref: Workflows.DocumentTypeId > DocumentTypes.Id
+Ref: Workflows.CreatedById > LocalUsers.Id
+Ref: Workflows.RevokedById > LocalUsers.Id
